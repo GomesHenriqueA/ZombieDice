@@ -52,17 +52,19 @@ else:
         rodada = False
         i = 1
 
+        # Indicação de quem irá jogar os dados
         try:
-            jogadorVez = int(input("Insira o Número do jogador que irá jogar os dados:"))
-            playerAtual = jogadorVez - 1
+            jogador = int(input("Insira o Número do jogador que irá jogar os dados:"))
+            jogadorVez = jogador - 1
 
         except:
             print("Insira um Valor Válido!")
 
-        if jogadorVez != 0:
+        if jogador != 0:
             playGame = True
             rodada = True
 
+        # Inicio da Rodada
         while rodada == True:
             try:
                 jogar = int(input("[1] - Rolar os Dados\n[2] - Sair\n"))
@@ -77,11 +79,11 @@ else:
 
                     faceDado = random.randint(0, 5)
 
-                    # Verificação das faces sorteadas
+                    # Verificação das faces sorteadas e agregamento de pontos
                     try:
                         if dadoSorteado[faceDado] == "C":
-                            if listPlayers[playerAtual][cerebros] == 13: # Em desenvolvimento
-                                print(f"======= Vitória do Jogador N°{playerAtual} =======")
+                            if listPlayers[jogadorVez][cerebros] == 13: # Em desenvolvimento
+                                print(f"======= Vitória do Jogador N°{jogadorVez} =======")
                                 rodada = False
                                 playGame = False
                             else:
@@ -90,7 +92,7 @@ else:
                                 cerebros = cerebros + 1
 
                         elif dadoSorteado[faceDado] == "T":
-                            if listPlayers[playerAtual][vidas] == 0: # Em desenvolvimento
+                            if listPlayers[jogadorVez][vidas] == 0: # Em desenvolvimento
                                 print("Você ficou sem vidas! Fim da sua Rodada!")
                                 rodada = False
                             else:
@@ -102,8 +104,20 @@ else:
                             print("Sua vítma fugiu, corra atrás dela!!!")
                     except:
                         print("Erro")
-            else:
-                print("Fim de Jogo")
+            # Finalização de Turno
+            elif jogar == 2:
+                print("Fim do seu Turno!\nPróximo Jogador!")
                 rodada = False
-                playGame = False
-                break
+            try:
+                continuar = int(input("Deseja Continuar Jogando?\n[1] - Sim\n[2] - Não\n"))
+                if continuar == 1:
+                    continue
+                else:
+                    print("Fim de Jogo!")
+                    playGame = False
+                    break
+            except:
+                print("Valor Inválido!")
+        else:
+            rodada = False
+            playGame = False
