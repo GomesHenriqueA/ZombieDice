@@ -1,3 +1,7 @@
+# Projeto Jogo Zombie Dice em Desenvolvimento por Henrique Gomes - Curso: Análise e Desenvolvimento de Sistemas
+# 27/08/2021
+
+
 import random
 
 # Dados
