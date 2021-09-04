@@ -1,6 +1,7 @@
 # Projeto Jogo Zombie Dice em Desenvolvimento por Henrique Gomes - Curso: Análise e Desenvolvimento de Sistemas
 # 27/08/2021
 
+import os
 import random
 
 # Dados
@@ -49,7 +50,7 @@ while opção != 4:
         if opcaoInicio == 1:
 
             # Seleção de Número de Jogadores
-            numJog = int(input("Insira o Número de Jogadores: "))
+            numJog = int(input("Insira o Número de Jogadores: \n"))
             if numJog < 2:
                 print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial")
             else:
@@ -70,6 +71,7 @@ while opção != 4:
                     adicionarDados()
                     rodada = False
                     i = 1
+                    os.system("cls")
 
                     # Indicação de quem irá jogar os dados
                     try:
@@ -110,7 +112,7 @@ while opção != 4:
                                             playGame = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
-                                            print("Voce comeu um Cérebro!")
+                                            print("Voce comeu um Cérebro!\n")
                                             cerebrosTurno = cerebrosTurno + 1
 
                                     elif dadoSorteado[faceDado] == "T":
@@ -122,11 +124,11 @@ while opção != 4:
                                             rodada = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
-                                            print("Você levou um tiro!")
+                                            print("Você levou um tiro!\n")
                                             tirosTurno = tirosTurno + 1
                                     else:
                                         print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
-                                        print("Sua vítma fugiu, corra atrás dela!!!")
+                                        print("Sua vítma fugiu, corra atrás dela!!!\n")
                                 except:
                                     print("Erro")
                         # Finalização de Turno
@@ -144,6 +146,7 @@ while opção != 4:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     rodada = False
+                                    os.system("cls")
                                 else:
                                     continue
                             elif continuar == 2:
@@ -151,9 +154,9 @@ while opção != 4:
                                 cerebrosTurno = 0
                                 listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
                                 tirosTurno = 0
-                                print("Fim de Jogo!")
-                                playGame = False
-                                break
+                                os.system("cls")
+                                print("Fim do seu Turno!")
+                                rodada = False
                             else:
                                 print("Digite um Valor Válido!")
                         except:
@@ -170,6 +173,7 @@ while opção != 4:
         if len(listPlayers) == 0:
             print("A lista de Jogadores esta Vazia!\n")
         else:
+            os.system("cls")
             print(listPlayers)
 
     # Opção 3 = Excluir um Jogador da lista
