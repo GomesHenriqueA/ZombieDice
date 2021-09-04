@@ -1,7 +1,6 @@
 # Projeto Jogo Zombie Dice em Desenvolvimento por Henrique Gomes - Curso: Análise e Desenvolvimento de Sistemas
 # 27/08/2021
 
-
 import random
 
 # Dados
@@ -60,8 +59,9 @@ while opção != 4:
                     vidas = 3
 
                     # Adiciona cada jogador à lista e agrega o placar individual
-                    player = [f"Player N°{ind}, Nome: {nome}, Pontos: {cerebrosTotal}, Vidas: {vidas}"]
-                    listPlayers.append(player)
+                    player = ["N°" + str(ind), "Nome: " + str(nome), "Pontos: " + str(cerebrosTotal), "Vidas:" + str(vidas)]
+
+                    listPlayers.append(player)  # Adiciona Lista 1 na lista com todos os jogadores.
 
                 playGame = True
 
@@ -82,10 +82,12 @@ while opção != 4:
                     if jogador != 0:
                         playGame = True
                         rodada = True
+                        cerebrosTurno = 0
+                        tirosTurno = 0
 
                     # Inicio da Rodada
                     while rodada == True:
-                        cerebrosTurno = 0
+
                         try:
                             jogar = int(input("[1] - Rolar os Dados\n[2] - Sair\n"))
                         except:
@@ -102,7 +104,7 @@ while opção != 4:
                                 # Verificação das faces sorteadas e agregamento de pontos
                                 try:
                                     if dadoSorteado[faceDado] == "C":
-                                        if listPlayers[jogadorVez][cerebrosTotal] == 13:  # Em desenvolvimento
+                                        if listPlayers[jogadorVez][2] == 13:  # Em desenvolvimento
                                             print(f"======= Vitória do Jogador N°{jogadorVez} =======")
                                             rodada = False
                                             playGame = False
@@ -112,13 +114,16 @@ while opção != 4:
                                             cerebrosTurno = cerebrosTurno + 1
 
                                     elif dadoSorteado[faceDado] == "T":
-                                        if listPlayers[jogadorVez][vidas] == 0:  # Em desenvolvimento
+                                        if listPlayers[jogadorVez][3] == 0:  # Em desenvolvimento
                                             print("Você ficou sem vidas! Fim da sua Rodada!")
+                                            rodada = False
+                                        elif tirosTurno == 3:
+                                            print("Você levou muitos tiros! Fim da sua Rodada!")
                                             rodada = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Você levou um tiro!")
-                                            vidas = vidas - 1
+                                            tirosTurno = tirosTurno + 1
                                     else:
                                         print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                         print("Sua vítma fugiu, corra atrás dela!!!")
@@ -128,15 +133,24 @@ while opção != 4:
                         elif jogar == 2:
                             print("Fim do seu Turno!\nPróximo Jogador!")
                             rodada = False
-                            cerebrosTotal = cerebrosTotal + cerebrosTurno
+                            listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                             cerebrosTurno = 0
+                            listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
+                            tirosTurno = 0
                         try:
                             continuar = int(input("Deseja Continuar Jogando?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
-                                continue
+                                if tirosTurno == 3:
+                                    print("Impossível continuar jogando nesta Rodada.")
+                                    print("Você levou muitos tiros! Fim do seu Turno!\n")
+                                    rodada = False
+                                else:
+                                    continue
                             elif continuar == 2:
-                                listPlayers[jogadorVez][2] = cerebrosTotal + cerebrosTurno
+                                listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                                 cerebrosTurno = 0
+                                listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
+                                tirosTurno = 0
                                 print("Fim de Jogo!")
                                 playGame = False
                                 break
@@ -146,7 +160,6 @@ while opção != 4:
                             print("Valor Inválido!")
                     else:
                         rodada = False
-                        playGame = False
         elif opcaoInicio == 2:
             break
         else:
