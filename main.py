@@ -49,7 +49,8 @@ while opção != 4:
             # Seleção de Número de Jogadores
             numJog = int(input("Insira o Número de Jogadores: \n"))
             if numJog < 2:
-                print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial")
+                os.system("cls")
+                print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial\n")
             else:
                 for ind in range(1, numJog + 1):
                     nome = input(f"Insira o Nome do jogador N° {ind}: ")
@@ -86,7 +87,7 @@ while opção != 4:
                     while rodada == True:
 
                         try:
-                            jogar = int(input("[1] - Rolar os Dados\n[2] - Sair\n"))
+                            jogar = int(input("[1] - Rolar os Dados\n[2] - Finalizar Turno\n"))
                         except:
                             print("Digite um valor Válido!")
                         if jogar == 1:
@@ -139,23 +140,34 @@ while opção != 4:
                         else:
                             print("Digite um Valor Válido!")
                         try:
-                            continuar = int(input("Deseja Continuar Jogando?\n[1] - Sim\n[2] - Não\n"))
+                            continuar = int(input("Deseja Continuar o Jogo?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
                                 os.system("cls")
                                 if tirosTurno == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     rodada = False
+                                    break
                                 else:
                                     continue
                             elif continuar == 2:
                                 os.system("cls")
-                                listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
-                                cerebrosTurno = 0
-                                listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
-                                tirosTurno = 0
-                                print("Fim do seu Turno!")
-                                rodada = False
+                                sair = int(input("O Jogo será finalizado, tem certeza que deseja continuar?\n[1] - Sim\n[2] - Não\n"))
+                                if sair == 1:
+                                    os.system("cls")
+                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
+                                    cerebrosTurno = 0
+                                    listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
+                                    tirosTurno = 0
+                                    print("Fim do Jogo!\n")
+                                    rodada = False
+                                    playGame = False
+                                    break
+                                elif sair == 2:
+                                    os.system("cls")
+                                    continue
+                                else:
+                                    print("Digite um Valor Válido!")
                             else:
                                 print("Digite um Valor Válido!")
                         except:
@@ -163,7 +175,8 @@ while opção != 4:
                     else:
                         rodada = False
         elif opcaoInicio == 2:
-            break
+            os.system("cls")
+            continue
         else:
             print("Insira um Valor Válido!")
 
@@ -179,10 +192,11 @@ while opção != 4:
     elif opção == 3:
         os.system("cls")
         if len(listPlayers) == 0:
+            print("Impossível deletar jogadores!\n")
             print("A lista de Jogadores esta Vazia!\n")
         elif len(listPlayers) == 2:
             print("Operação Ilegal!")
-            print("Se um Jogador for Excluído o número de jogadores restantes será insuficiente para jogar!")
+            print("Se um Jogador for Excluído o número de jogadores restantes será insuficiente para jogar!\n")
         else:
             delJogador = int(input("Digite o Número do Jogador que Deseja Excluir:"))
             delJogador = delJogador - 1
