@@ -1,6 +1,3 @@
-# Projeto Jogo Zombie Dice em Desenvolvimento por Henrique Gomes - Curso: Análise e Desenvolvimento de Sistemas
-# 27/08/2021
-
 import os
 import random
 
@@ -11,12 +8,11 @@ dadoVermelho = "TPTCPT"
 
 playGame = False
 
-# Adiciona os 13 dados no saco
-
 saco = []
 listPlayers = []
 
 
+# Adiciona os 13 dados no saco
 def adicionarDados():
     for i in range(0, 6):
         saco.append(dadoVerde)
@@ -41,6 +37,7 @@ while opção != 4:
     print()
     opção = int(input("Escolha uma Opção!\n"))
     if opção == 1:
+        os.system("cls")
         print()
         print("Novo Jogo")
         print("----------------------")
@@ -62,7 +59,7 @@ while opção != 4:
                     # Adiciona cada jogador à lista e agrega o placar individual
                     player = ["N°" + str(ind), "Nome: " + str(nome), "Pontos: " + str(cerebrosTotal), "Vidas:" + str(vidas)]
 
-                    listPlayers.append(player)  # Adiciona Lista 1 na lista com todos os jogadores.
+                    listPlayers.append(player)
 
                 playGame = True
 
@@ -71,15 +68,13 @@ while opção != 4:
                     adicionarDados()
                     rodada = False
                     i = 1
-                    os.system("cls")
 
                     # Indicação de quem irá jogar os dados
                     try:
                         jogador = int(input("Insira o Número do jogador que irá jogar os dados:"))
                         jogadorVez = jogador - 1
-
                     except:
-                            print("Insira um Valor Válido!")
+                        print("Insira um Valor Válido!")
 
                     if jogador != 0:
                         playGame = True
@@ -95,6 +90,7 @@ while opção != 4:
                         except:
                             print("Digite um valor Válido!")
                         if jogar == 1:
+                            os.system("cls")
                             dados = []
                             for i in range(0, 3):
                                 numSorteado = random.randint(1, 12)
@@ -133,28 +129,31 @@ while opção != 4:
                                     print("Erro")
                         # Finalização de Turno
                         elif jogar == 2:
+                            os.system("cls")
                             print("Fim do seu Turno!\nPróximo Jogador!")
                             rodada = False
                             listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                             cerebrosTurno = 0
                             listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
                             tirosTurno = 0
+                        else:
+                            print("Digite um Valor Válido!")
                         try:
                             continuar = int(input("Deseja Continuar Jogando?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
+                                os.system("cls")
                                 if tirosTurno == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     rodada = False
-                                    os.system("cls")
                                 else:
                                     continue
                             elif continuar == 2:
+                                os.system("cls")
                                 listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                                 cerebrosTurno = 0
                                 listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
                                 tirosTurno = 0
-                                os.system("cls")
                                 print("Fim do seu Turno!")
                                 rodada = False
                             else:
@@ -170,19 +169,20 @@ while opção != 4:
 
     # Opção 2 = Mostrar o Placar
     elif opção == 2:
+        os.system("cls")
         if len(listPlayers) == 0:
             print("A lista de Jogadores esta Vazia!\n")
         else:
-            os.system("cls")
             print(listPlayers)
 
     # Opção 3 = Excluir um Jogador da lista
     elif opção == 3:
+        os.system("cls")
         if len(listPlayers) == 0:
             print("A lista de Jogadores esta Vazia!\n")
         elif len(listPlayers) == 2:
             print("Operação Ilegal!")
-            print("Se um Jogador for Excluido o número de jogadores restantes será insuficiente para jogar!")
+            print("Se um Jogador for Excluído o número de jogadores restantes será insuficiente para jogar!")
         else:
             delJogador = int(input("Digite o Número do Jogador que Deseja Excluir:"))
             delJogador = delJogador - 1
@@ -190,6 +190,7 @@ while opção != 4:
 
     # Opção 4 = Fechar o Jogo
     elif opção == 4:
+        os.system("cls")
         print("Jogo Encerrado!\nObrigado Por jogar!")
         break
     else:
