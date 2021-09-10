@@ -55,10 +55,10 @@ while opção != 4:
                 for ind in range(1, numJog + 1):
                     nome = input(f"Insira o Nome do jogador N° {ind}: ")
                     cerebrosTotal = 0
-                    vidas = 3
+                    tiros = 0
 
                     # Adiciona cada jogador à lista e agrega o placar individual
-                    player = ["N°" + str(ind), "Nome: " + str(nome), "Pontos: " + str(cerebrosTotal), "Vidas:" + str(vidas)]
+                    player = ["N°" + str(ind), "Nome: " + str(nome), "Pontos: " + str(cerebrosTotal), "Tiros:" + str(tiros)]
 
                     listPlayers.append(player)
 
@@ -113,7 +113,7 @@ while opção != 4:
                                             cerebrosTurno = cerebrosTurno + 1
 
                                     elif dadoSorteado[faceDado] == "T":
-                                        if listPlayers[jogadorVez][3] == 0:  # Em desenvolvimento
+                                        if listPlayers[jogadorVez][tirosTurno] == 3:  # Em desenvolvimento
                                             print("Você ficou sem vidas! Fim da sua Rodada!")
                                             rodada = False
                                         elif tirosTurno == 3:
@@ -131,11 +131,11 @@ while opção != 4:
                         # Finalização de Turno
                         elif jogar == 2:
                             os.system("cls")
-                            print("Fim do seu Turno!\nPróximo Jogador!")
+                            print("Fim do seu Turno!\nPróximo Jogador!\n")
                             rodada = False
                             listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                             cerebrosTurno = 0
-                            listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
+                            listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
                             tirosTurno = 0
                         else:
                             print("Digite um Valor Válido!")
@@ -147,6 +147,10 @@ while opção != 4:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     rodada = False
+                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
+                                    cerebrosTurno = 0
+                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
+                                    tirosTurno = 0
                                     break
                                 else:
                                     continue
@@ -157,7 +161,7 @@ while opção != 4:
                                     os.system("cls")
                                     listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
                                     cerebrosTurno = 0
-                                    listPlayers[jogadorVez][3] = "Vidas: " + str(vidas - tirosTurno)
+                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
                                     tirosTurno = 0
                                     print("Fim do Jogo!\n")
                                     rodada = False
@@ -165,6 +169,10 @@ while opção != 4:
                                     break
                                 elif sair == 2:
                                     os.system("cls")
+                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
+                                    cerebrosTurno = 0
+                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
+                                    tirosTurno = 0
                                     continue
                                 else:
                                     print("Digite um Valor Válido!")
@@ -210,3 +218,4 @@ while opção != 4:
     else:
         print("Valor Inválido!")
 print("Fim do Programa!")
+input()
