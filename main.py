@@ -22,6 +22,14 @@ def adicionarDados():
         saco.append(dadoVermelho)
 
 
+dadosJogador = []
+
+
+def jogarDados():
+    for i in range(0, 3):
+        dadosJogador.append(random.choice(saco))
+
+
 opção = 0
 
 # Abertura do Menu Principal
@@ -48,19 +56,15 @@ while opção != 4:
 
             # Seleção de Número de Jogadores
             numJog = int(input("Insira o Número de Jogadores: \n"))
-            if numJog < 2:
-                os.system("cls")
-                print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial\n")
-            else:
+            if numJog >= 2:
+
+                # Adicionando jogadores:
+                ind = 1
                 for ind in range(1, numJog + 1):
                     nome = input(f"Insira o Nome do jogador N° {ind}: ")
-                    cerebrosTotal = 0
-                    tiros = 0
-
-                    # Adiciona cada jogador à lista e agrega o placar individual
-                    player = ["N°" + str(ind), "Nome: " + str(nome), "Pontos: " + str(cerebrosTotal), "Tiros:" + str(tiros)]
-
-                    listPlayers.append(player)
+                    pessoas = dict({'Player N°': ind, "Nome": nome, 'Pontos': 0, 'Tiros': 0})
+                    listPlayers.append(pessoas)
+                    ind += 1
 
                 playGame = True
 
@@ -91,66 +95,69 @@ while opção != 4:
                         except:
                             print("Digite um valor Válido!")
                         if jogar == 1:
+                            jogarDados()
                             os.system("cls")
                             dados = []
                             for i in range(0, 3):
-                                numSorteado = random.randint(1, 12)
+                                numSorteado = random.randint(0, 3)
 
-                                dadoSorteado = saco[numSorteado]
+                                dadoSorteado = dadosJogador[numSorteado]
 
                                 faceDado = random.randint(0, 5)
 
                                 # Verificação das faces sorteadas e agregamento de pontos
                                 try:
                                     if dadoSorteado[faceDado] == "C":
-                                        if listPlayers[jogadorVez][2] == 13:  # Em desenvolvimento
+                                        if listPlayers[jogadorVez]['Pontos'] == 13:
                                             print(f"======= Vitória do Jogador N°{jogadorVez} =======")
                                             rodada = False
                                             playGame = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Voce comeu um Cérebro!\n")
-                                            cerebrosTurno = cerebrosTurno + 1
+                                            listPlayers[jogadorVez]['Pontos'] += 1
 
                                     elif dadoSorteado[faceDado] == "T":
-                                        if listPlayers[jogadorVez][tirosTurno] == 3:  # Em desenvolvimento
+                                        if listPlayers[jogadorVez]['Tiros'] == 3:
                                             print("Você ficou sem vidas! Fim da sua Rodada!")
-                                            rodada = False
-                                        elif tirosTurno == 3:
-                                            print("Você levou muitos tiros! Fim da sua Rodada!")
                                             rodada = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Você levou um tiro!\n")
-                                            tirosTurno = tirosTurno + 1
+                                            listPlayers[jogadorVez]['Tiros'] += 1
                                     else:
                                         print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                         print("Sua vítma fugiu, corra atrás dela!!!\n")
+
+                                    # Remover o Dado depois de jogado
+                                    del dadosJogador[i]
+                                    if len(saco) == 0:
+                                        adicionarDados()
+                                    elif playGame == False:
+                                        adicionarDados()
+                                    elif len(dadosJogador) < 3:
+                                        jogarDados()
                                 except:
                                     print("Erro")
+
+
+
                         # Finalização de Turno
                         elif jogar == 2:
                             os.system("cls")
                             print("Fim do seu Turno!\nPróximo Jogador!\n")
                             rodada = False
-                            listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
-                            cerebrosTurno = 0
-                            listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
-                            tirosTurno = 0
                         else:
                             print("Digite um Valor Válido!")
                         try:
                             continuar = int(input("Deseja Continuar o Jogo?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
                                 os.system("cls")
-                                if tirosTurno == 3:
+                                if listPlayers[jogadorVez]['Tiros'] == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     rodada = False
-                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
-                                    cerebrosTurno = 0
-                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
-                                    tirosTurno = 0
+
                                     break
                                 else:
                                     continue
@@ -159,20 +166,14 @@ while opção != 4:
                                 sair = int(input("O Jogo será finalizado, tem certeza que deseja continuar?\n[1] - Sim\n[2] - Não\n"))
                                 if sair == 1:
                                     os.system("cls")
-                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
-                                    cerebrosTurno = 0
-                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
-                                    tirosTurno = 0
+
                                     print("Fim do Jogo!\n")
                                     rodada = False
                                     playGame = False
                                     break
                                 elif sair == 2:
                                     os.system("cls")
-                                    listPlayers[jogadorVez][2] = "Pontos: " + str(cerebrosTotal + cerebrosTurno)
-                                    cerebrosTurno = 0
-                                    listPlayers[jogadorVez][3] = "Tiros: " + str(tiros + tirosTurno)
-                                    tirosTurno = 0
+
                                     continue
                                 else:
                                     print("Digite um Valor Válido!")
@@ -182,6 +183,9 @@ while opção != 4:
                             print("Valor Inválido!")
                     else:
                         rodada = False
+            elif numJog < 2:
+                os.system("cls")
+                print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial\n")
         elif opcaoInicio == 2:
             os.system("cls")
             continue
