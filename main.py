@@ -110,18 +110,22 @@ while opção != 4:
                                 # Verificação das faces sorteadas e agregamento de pontos
                                 try:
                                     if dadoSorteado[faceDado] == "C":
-                                        if listPlayers[jogadorVez]['Pontos'] == 13:
-                                            print(f"======= Vitória do Jogador N°{jogadorVez} =======")
+                                        if listPlayers[jogadorVez]['Pontos'] >= 13 or cerebrosTurno >= 13:
+                                            os.system("cls")
+                                            listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
+                                            print("======= VITÓRIA=======")
+                                            print(listPlayers[jogadorVez])
                                             rodada = False
                                             playGame = False
+                                            break
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Voce comeu um Cérebro!\n")
                                             cerebrosTurno = cerebrosTurno + 1
 
                                     elif dadoSorteado[faceDado] == "T":
-                                        if listPlayers[jogadorVez]['Tiros'] == 3:
-                                            print("Você ficou sem vidas! Fim da sua Rodada!")
+                                        if listPlayers[jogadorVez]['Tiros'] == 3 or tirosTurno == 3:
+                                            print("Você ficou sem vidas!\nOs cérebros comidos nesta rodada foram perdidos!")
                                             rodada = False
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
@@ -149,7 +153,6 @@ while opção != 4:
                             rodada = False
                             listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
                             cerebrosTurno = 0
-                            listPlayers[jogadorVez]['Tiros'] += tirosTurno
                             tirosTurno = 0
                         else:
                             print("Digite um Valor Válido!")
@@ -157,12 +160,10 @@ while opção != 4:
                             continuar = int(input("Deseja Continuar o Jogo?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
                                 os.system("cls")
-                                if listPlayers[jogadorVez]['Tiros'] == 3:
+                                if listPlayers[jogadorVez]['Tiros'] == 3 or tirosTurno == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
-                                    listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
                                     cerebrosTurno = 0
-                                    listPlayers[jogadorVez]['Tiros'] += tirosTurno
                                     tirosTurno = 0
                                     rodada = False
                                     break
