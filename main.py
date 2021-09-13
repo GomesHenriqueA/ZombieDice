@@ -152,6 +152,7 @@ while opção != 4:
                             rodada = False
                             listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
                             cerebrosTurno = 0
+                            listPlayers[jogadorVez]['Tiros'] += tirosTurno
                             tirosTurno = 0
                             print("====== Placar Atual ======")
                             print(f"{listPlayers}\n")
@@ -165,6 +166,7 @@ while opção != 4:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     cerebrosTurno = 0
+                                    listPlayers[jogadorVez]['Tiros'] += tirosTurno
                                     tirosTurno = 0
                                     rodada = False
                                     break
@@ -181,6 +183,8 @@ while opção != 4:
                                     listPlayers[jogadorVez]['Tiros'] += tirosTurno
                                     tirosTurno = 0
                                     print("Fim do Jogo!\n")
+                                    print("====== Placar Atual ======")
+                                    print(f"{listPlayers}\n")
                                     rodada = False
                                     playGame = False
                                     break
