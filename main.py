@@ -24,7 +24,6 @@ def adicionarDados():
 
 dadosJogador = []
 
-
 def jogarDados():
     dadosJogador.clear()
     for i in range(0, 3):
@@ -100,9 +99,8 @@ while opção != 4:
                             os.system("cls")
                             dados = []
                             for i in range(0, 3):
-                                numSorteado = random.randint(0, len(dadosJogador))
-
-                                dadoSorteado = dadosJogador[numSorteado]
+                                # Escolhe aleatoriamente um entre os 3 dados pegos pelo jogador
+                                dadoSorteado = random.choice(dadosJogador)
 
                                 faceDado = random.randint(0, 5)
 
