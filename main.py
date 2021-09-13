@@ -122,7 +122,7 @@ while opção != 4:
                                             dadosJogador.remove(dadoSorteado)
 
                                     elif dadoSorteado[faceDado] == "T":
-                                        if listPlayers[jogadorVez]['Tiros'] == 3 or tirosTurno == 3:
+                                        if tirosTurno == 3:
                                             print("Você ficou sem vidas!\nOs cérebros comidos nesta rodada foram perdidos!")
                                             rodada = False
                                         else:
@@ -162,7 +162,7 @@ while opção != 4:
                             continuar = int(input("Deseja Continuar o Jogo?\n[1] - Sim\n[2] - Não\n"))
                             if continuar == 1:
                                 os.system("cls")
-                                if listPlayers[jogadorVez]['Tiros'] == 3 or tirosTurno == 3:
+                                if tirosTurno == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
                                     cerebrosTurno = 0
