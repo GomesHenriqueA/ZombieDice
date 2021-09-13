@@ -26,6 +26,7 @@ dadosJogador = []
 
 
 def jogarDados():
+    dadosJogador.clear()
     for i in range(0, 3):
         dadosJogador.append(random.choice(saco))
 
@@ -90,8 +91,6 @@ while opção != 4:
                     # Inicio da Rodada
                     while rodada == True:
 
-                        jogarDados()
-
                         try:
                             jogar = int(input("[1] - Rolar os Dados\n[2] - Finalizar Turno\n"))
                         except:
@@ -101,7 +100,7 @@ while opção != 4:
                             os.system("cls")
                             dados = []
                             for i in range(0, 3):
-                                numSorteado = random.randint(0, 3)
+                                numSorteado = random.randint(0, len(dadosJogador))
 
                                 dadoSorteado = dadosJogador[numSorteado]
 
@@ -113,7 +112,7 @@ while opção != 4:
                                         if listPlayers[jogadorVez]['Pontos'] >= 13 or cerebrosTurno >= 13:
                                             os.system("cls")
                                             listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
-                                            print("======= VITÓRIA=======")
+                                            print("============== VITÓRIA ==============")
                                             print(listPlayers[jogadorVez])
                                             rodada = False
                                             playGame = False
@@ -122,6 +121,7 @@ while opção != 4:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Voce comeu um Cérebro!\n")
                                             cerebrosTurno = cerebrosTurno + 1
+                                            dadosJogador.remove(dadoSorteado)
 
                                     elif dadoSorteado[faceDado] == "T":
                                         if listPlayers[jogadorVez]['Tiros'] == 3 or tirosTurno == 3:
@@ -131,20 +131,21 @@ while opção != 4:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Você levou um tiro!\n")
                                             tirosTurno = tirosTurno + 1
+                                            dadosJogador.remove(dadoSorteado)
                                     else:
                                         print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                         print("Sua vítma fugiu, corra atrás dela!!!\n")
-
-                                    # Remover o Dado depois de jogado
-                                    del dadosJogador[i]
-                                    if len(saco) == 0:
-                                        adicionarDados()
-                                    elif playGame == False:
-                                        adicionarDados()
-                                    elif len(dadosJogador) < 3:
-                                        jogarDados()
                                 except:
                                     print("Erro")
+
+                            # Remover os Dados depois de jogado
+                            if len(saco) == 0:
+                                print("Você não tem mais dados neste turno!")
+                            elif playGame == False:
+                                adicionarDados()
+                            elif len(dadosJogador) < 3:
+                                jogarDados()
+
 
                         # Finalização de Turno
                         elif jogar == 2:
