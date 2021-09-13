@@ -90,6 +90,8 @@ while opção != 4:
                     # Inicio da Rodada
                     while rodada == True:
 
+                        jogarDados()
+
                         try:
                             jogar = int(input("[1] - Rolar os Dados\n[2] - Finalizar Turno\n"))
                         except:
@@ -115,7 +117,7 @@ while opção != 4:
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Voce comeu um Cérebro!\n")
-                                            listPlayers[jogadorVez]['Pontos'] += 1
+                                            cerebrosTurno = cerebrosTurno + 1
 
                                     elif dadoSorteado[faceDado] == "T":
                                         if listPlayers[jogadorVez]['Tiros'] == 3:
@@ -124,7 +126,7 @@ while opção != 4:
                                         else:
                                             print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                             print("Você levou um tiro!\n")
-                                            listPlayers[jogadorVez]['Tiros'] += 1
+                                            tirosTurno = tirosTurno + 1
                                     else:
                                         print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
                                         print("Sua vítma fugiu, corra atrás dela!!!\n")
@@ -140,13 +142,15 @@ while opção != 4:
                                 except:
                                     print("Erro")
 
-
-
                         # Finalização de Turno
                         elif jogar == 2:
                             os.system("cls")
                             print("Fim do seu Turno!\nPróximo Jogador!\n")
                             rodada = False
+                            listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
+                            cerebrosTurno = 0
+                            listPlayers[jogadorVez]['Tiros'] += tirosTurno
+                            tirosTurno = 0
                         else:
                             print("Digite um Valor Válido!")
                         try:
@@ -156,24 +160,30 @@ while opção != 4:
                                 if listPlayers[jogadorVez]['Tiros'] == 3:
                                     print("Impossível continuar jogando nesta Rodada.")
                                     print("Você levou muitos tiros! Fim do seu Turno!\n")
+                                    listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
+                                    cerebrosTurno = 0
+                                    listPlayers[jogadorVez]['Tiros'] += tirosTurno
+                                    tirosTurno = 0
                                     rodada = False
-
                                     break
                                 else:
                                     continue
+                            # Confirmação de Finalização do Jogo
                             elif continuar == 2:
                                 os.system("cls")
                                 sair = int(input("O Jogo será finalizado, tem certeza que deseja continuar?\n[1] - Sim\n[2] - Não\n"))
                                 if sair == 1:
                                     os.system("cls")
-
+                                    listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
+                                    cerebrosTurno = 0
+                                    listPlayers[jogadorVez]['Tiros'] += tirosTurno
+                                    tirosTurno = 0
                                     print("Fim do Jogo!\n")
                                     rodada = False
                                     playGame = False
                                     break
                                 elif sair == 2:
                                     os.system("cls")
-
                                     continue
                                 else:
                                     print("Digite um Valor Válido!")
@@ -183,6 +193,7 @@ while opção != 4:
                             print("Valor Inválido!")
                     else:
                         rodada = False
+            # Aviso de Jogadores Insuficientes
             elif numJog < 2:
                 os.system("cls")
                 print("Número de Jogadores insuficientes!\nRetornando ao Menu Inicial\n")
