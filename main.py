@@ -153,6 +153,8 @@ while opção != 4:
                             listPlayers[jogadorVez]['Pontos'] += cerebrosTurno
                             cerebrosTurno = 0
                             tirosTurno = 0
+                            print("====== Placar Atual ======")
+                            print(f"{listPlayers}\n")
                         else:
                             print("Digite um Valor Válido!")
                         try:
