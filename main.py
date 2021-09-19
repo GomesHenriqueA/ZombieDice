@@ -30,6 +30,10 @@ def jogarDados():
         dadosJogador.append(random.choice(saco))
 
 
+def mostrarPacar():
+    print("====== Placar Atual ======")
+    print(f"{listPlayers}\n")
+
 opção = 0
 
 # Abertura do Menu Principal
@@ -101,11 +105,19 @@ while opção != 4:
                             for i in range(0, 3):
                                 # Escolhe aleatoriamente um entre os 3 dados pegos pelo jogador
                                 dadoSorteado = random.choice(dadosJogador)
+                                corDado = dadoSorteado
 
                                 faceDado = random.randint(0, 5)
 
                                 # Verificação das faces sorteadas e agregamento de pontos
                                 try:
+                                    if dadoSorteado == "CPCTPC":
+                                        corDado = "Verde"
+                                    elif dadoSorteado == "TPCTPC":
+                                        corDado = "Amarelo"
+                                    else:
+                                        corDado = "Vermelho"
+
                                     if dadoSorteado[faceDado] == "C":
                                         if listPlayers[jogadorVez]['Pontos'] >= 13 or cerebrosTurno >= 13:
                                             os.system("cls")
@@ -116,7 +128,7 @@ while opção != 4:
                                             playGame = False
                                             break
                                         else:
-                                            print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
+                                            print(f"Dado {corDado}: {dadoSorteado[faceDado]}")
                                             print("Voce comeu um Cérebro!\n")
                                             cerebrosTurno = cerebrosTurno + 1
                                             dadosJogador.remove(dadoSorteado)
@@ -126,12 +138,12 @@ while opção != 4:
                                             print("Você ficou sem vidas!\nOs cérebros comidos nesta rodada foram perdidos!")
                                             rodada = False
                                         else:
-                                            print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
+                                            print(f"Dado {corDado}: {dadoSorteado[faceDado]}")
                                             print("Você levou um tiro!\n")
                                             tirosTurno = tirosTurno + 1
                                             dadosJogador.remove(dadoSorteado)
                                     else:
-                                        print(f"Dado {i + 1}: {dadoSorteado[faceDado]}")
+                                        print(f"Dado {corDado}: {dadoSorteado[faceDado]}")
                                         print("Sua vítma fugiu, corra atrás dela!!!\n")
                                 except:
                                     print("Erro")
@@ -183,8 +195,7 @@ while opção != 4:
                                     listPlayers[jogadorVez]['Tiros'] += tirosTurno
                                     tirosTurno = 0
                                     print("Fim do Jogo!\n")
-                                    print("====== Placar Atual ======")
-                                    print(f"{listPlayers}\n")
+                                    mostrarPacar()
                                     rodada = False
                                     playGame = False
                                     break
@@ -215,7 +226,7 @@ while opção != 4:
         if len(listPlayers) == 0:
             print("A lista de Jogadores esta Vazia!\n")
         else:
-            print(listPlayers)
+            mostrarPacar()
 
     # Opção 3 = Excluir um Jogador da lista
     elif opção == 3:
